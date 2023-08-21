@@ -89,6 +89,110 @@ const classes = {
   })
 };
 
+const places = [
+  {
+    name: "Tiks",
+    number: 1,
+  },
+  {
+    name: "John",
+    number: 2,
+  }
+]
+
+const banquettes = [3, 4, 3, 3, 3, 3, 4];
+const fillPlaces = (count: number, places = []) => {
+  // const allPlaces = [...places]
+  const remaingPlacesCount = count - places.length;
+  const emptyPlaces = new Array(remaingPlacesCount).fill(0);
+  // const allPlaces = [...places, ...emptyPlaces];
+  const newEmptyPlaces = []
+  // allPlaces.forEach((place, index) => {
+  //   const number = typeof place.number === 'number' ? place.number : index
+  //   newEmptyPlaces.push({ ...place, number })
+  // })
+
+  emptyPlaces.forEach((_, index) => {
+    const number = places.length + 1 + index
+    newEmptyPlaces.push({ number })
+  })
+
+  const allPlaces = [...places, ...newEmptyPlaces];
+  const formattedAllPlaces = []
+  const maxBanquetteCount = 4
+  const banquetteCount = 3;
+  // allPlaces.forEach((place, index) => {
+  //   const placesPerBanquette = []
+  //   for (const banquette of banquettes) {
+  //     if (place.number >= index && place.number < banquette) {
+  //       placesPerBanquette.push(place)
+  //     }
+  //   }
+  //   formattedAllPlaces.push(placesPerBanquette)
+  //   // if (place.number >= 0 && place.number <= banquetteCount) {
+  //   //   if (formattedAllPlaces[0]) {
+  //   //     formattedAllPlaces[0].push(place)
+  //   //   } else {
+  //   //     formattedAllPlaces[0] = [place]
+  //   //   }
+  //   // } else if (place.number >= maxBanquetteCount && place.number < maxBanquetteCount * 2) {
+  //   //   if (formattedAllPlaces[1]) {
+  //   //     formattedAllPlaces[1].push(place)
+  //   //   } else {
+  //   //     formattedAllPlaces[1] = [place]
+  //   //   }
+  //   // } else {
+  //   //   if (formattedAllPlaces[index + 1]) {
+  //   //     formattedAllPlaces[index + 1].push(place)
+  //   //   } else {
+  //   //     formattedAllPlaces[index + 1] = [place]
+  //   //   }
+  //   // }
+  // })
+  // banquettes.forEach((banquette, bIndex) => {
+  //   const placesPerBanquette = []
+  //   const bqs = new Array(banquette).fill(0);
+  //   // bqs.forEach((_, index) => {
+  //   //   if (place.number >= bIndex && place.number < banquette + 1) {
+  //   //     placesPerBanquette.push(place)
+  //   //   }
+  //   // })
+  //   // allPlaces.forEach((place, index) => {
+  //   //   if (place.number >= bIndex && place.number < banquette + 1) {
+  //   //     placesPerBanquette.push(place)
+  //   //   }
+  //   // })
+  //   formattedAllPlaces.push(placesPerBanquette)
+  //   // if (place.number >= 0 && place.number <= banquetteCount) {
+  //   //   if (formattedAllPlaces[0]) {
+  //   //     formattedAllPlaces[0].push(place)
+  //   //   } else {
+  //   //     formattedAllPlaces[0] = [place]
+  //   //   }
+  //   // } else if (place.number >= maxBanquetteCount && place.number < maxBanquetteCount * 2) {
+  //   //   if (formattedAllPlaces[1]) {
+  //   //     formattedAllPlaces[1].push(place)
+  //   //   } else {
+  //   //     formattedAllPlaces[1] = [place]
+  //   //   }
+  //   // } else {
+  //   //   if (formattedAllPlaces[index + 1]) {
+  //   //     formattedAllPlaces[index + 1].push(place)
+  //   //   } else {
+  //   //     formattedAllPlaces[index + 1] = [place]
+  //   //   }
+  //   // }
+  // })
+    // formattedAllPlaces.push()
+
+
+  // console.log('formattedAllPlaces', formattedAllPlaces)
+
+  return allPlaces
+}
+
+
+console.log('fillPlaces', fillPlaces(25, places))
 const Home = () => {
   const [options, setOptions] = useState<ISwitchOption[]>(
     fields.map(
@@ -96,40 +200,19 @@ const Home = () => {
     )
   );
 
-  const handleCheck = (value: string) => {
-    setOptions((prev: ISwitchOption[]): ISwitchOption[] => {
-      const newFields = prev.map(
-        (field: ISwitchOption): ISwitchOption => {
-          if (value === field.value) {
-            return { ...field, checked: !field.checked };
-          }
-
-          return field;
-        }
-      );
-
-      return newFields;
-    });
-  };
-
-  console.log("options", options);
+  const allPlaces = fillPlaces(25, places)
+      // console.log('allPlaces', allPlaces)
 
   return (
-    <div className="flexCenter" css={{ padding: 20 }}>
-      <div className="flexCenter" css={{ minWidth: 290 }}>
-        <Stack spacing={2.6} className="stretchSelf">
-          {options.map((field: ISwitchOption, index: number) => (
-            <FormControlLabel
-              key={field.value + index}
-              control={<Switch />}
-              css={classes.formControl}
-              onChange={() => handleCheck(field.value)}
-              value={field.checked}
-              className="flexRow spaceBetween"
-              label={field.label}
-            />
-          ))}
-        </Stack>
+    <div className="flexCenter" >
+      <div className="flexCenter red" css={{ minWidth: 400 }}>
+        {allPlaces.map((place, index) => (
+          <div key={index}>
+            <div>
+              {place.number}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
